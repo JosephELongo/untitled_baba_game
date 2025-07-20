@@ -5,11 +5,14 @@
 
 
 div.skull_and_text {
-    vertical-align: top;
-    display: inline-block;
     text-align: center;
-;
 }
-.caption {
-    display: block;
+
+div.skull_and_text{
+    text-align:center;
+}
+
+div.scoreBox{
+    background-color: aqua;
+    text-align:center;
 }
