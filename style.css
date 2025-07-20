@@ -1,18 +1,35 @@
+/* Make the page take full height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Set up grid layout and stretch to fill the page */
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-  }
+    grid-template-rows: 1fr auto; /* Add an extra row for save/load */
+    height: 100%;
+}
 
+/* Position save/load box in its own row and center contents */
+#cookie_box {
+    grid-column: 1 / -1; /* Span across all columns */
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Space between buttons */
+    padding: 1rem;
+    align-items: center;
+    background-color: #f0f0f0; /* Optional background */
+}
 
+/* Keep your existing styles */
 div.skull_and_text {
     text-align: center;
 }
 
-div.skull_and_text{
-    text-align:center;
-}
-
-div.scoreBox{
+div.score_box {
     background-color: aqua;
-    text-align:center;
+    text-align: center;
 }
