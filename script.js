@@ -9,7 +9,7 @@ const bone_gravity = 10;
 const bone_rotation = 45;
 let bone_list = null;
 let lastTime = 0;
-const interval = 250;
+const interval = 100;
 
 // =======================================
 //       E V E N T    H A N D L I N G
@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
     load_button.addEventListener("click", getCookie);
 
     //Kick off the game loop
+    getCookie();
     requestAnimationFrame(gameLoop);
 })
 
@@ -107,7 +108,6 @@ function getCookie() {
         }
     }
     //call to display updated score
-    updateScoreBox();
     return "";
 }
 
