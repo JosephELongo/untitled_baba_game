@@ -52,7 +52,7 @@ function updateScoreBox() {
 }
 
 function summon(rect) {
-    let x = Math.floor(Math.random() * (rect.right - rect.left)) + rect.right;
+    let x = Math.floor(Math.random() * (rect.right - rect.left)) + rect.left;
     let y = rect.bottom;
     let bone = document.createElement("img");
     let rotation = Math.floor(Math.random() * bone_rotation)
