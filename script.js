@@ -4,6 +4,12 @@
 let score = 0;
 let score_increment = 1
 let score_box_showing = false;
+let bone_counter = 0;
+const bone_gravity = 10;
+const bone_rotation = 45;
+let bone_list = null;
+let lastTime = 0;
+const interval = 250;
 
 // =======================================
 //       E V E N T    H A N D L I N G
@@ -11,8 +17,14 @@ let score_box_showing = false;
 document.addEventListener("DOMContentLoaded", function() {
     const score_box = document.getElementById("score_box");
 
+    const zero_zero_text = document.getElementById("zero_zero_text");
+    let rect = zero_zero_text.getBoundingClientRect();
+
     const skellington = document.getElementById("skellington");
-    skellington.addEventListener("click", summon);
+    skellington.addEventListener("click", function(){
+        summon(rect)
+    }
+    );
 
     const save_button = document.getElementById("save_game");
     save_button.addEventListener("click", setCookie);
@@ -21,20 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const load_button = document.getElementById("load_game");
     load_button.addEventListener("click", getCookie);
 
-    // Code Smell?
-    // summon() cannot be moved down to helper functions
-    // as long as rect & midpoint_x aren't const
-    const zero_zero = document.getElementById("zero_zero");
-    let rect = zero_zero.getBoundingClientRect();
-    let midpoint_x = (rect.x + rect.x + rect.width) / 2;
-
-    function summon() {
-        score += score_increment;
-        updateScoreBox();
-        let bone = document.createElement("img");
-        bone.setAttribute("src", "Assets/bone.png")
-        zero_zero.appendChild(bone)
-    };
+    //Kick off the game loop
+    requestAnimationFrame(gameLoop);
 })
 
 // =======================================
@@ -45,11 +45,31 @@ function updateScoreBox() {
         score_box.className = "score_box";
         score_box_showing = true;
     }
-    //
+
     if(score > 0) {
         score_box.innerText = `You have summoned ${score} bones`;
     }
 }
+
+function summon(rect) {
+    let x = Math.floor(Math.random() * (rect.right - rect.left)) + rect.right;
+    let y = rect.bottom;
+    let bone = document.createElement("img");
+    let rotation = Math.floor(Math.random() * bone_rotation)
+
+    score += score_increment;
+    bone.id = `bone_${bone_counter}`;
+    bone.className = 'bone';
+    bone.src = "Assets/bone.png";
+    bone.rotation = rotation;
+    bone.style.left = `${x}px`;
+    bone.style.top = `${y}px`;
+    bone.style.rotate = '0deg';
+    bone.style.position = "absolute";
+
+    zero_zero.appendChild(bone);
+    bone_counter+=1;;
+};
 
 //TODO: Save & Load bone images in UI
 //Save Cookie Data
@@ -87,9 +107,32 @@ function getCookie() {
         }
     }
     //call to display updated score
-    updateScoreBox()
+    updateScoreBox();
     return "";
 }
 
+function gameLoop(timestamp){
+    //Timestamp gets automatically created and handled by requestAnimationFrame
+    //Then, we check if it's been at least interval
+    //If so, run our updates - otherwise move on
+    if (timestamp - lastTime >= interval){
+        lastTime = timestamp;
+        updateScoreBox();
+        updateBones();
+        bone_list = Array.from(document.getElementsByClassName('bone'));
+    }
 
+    requestAnimationFrame(gameLoop);
+};
 
+function updateBones(){
+    if (bone_list){
+        bone_list.forEach(bone => {
+            bone.style.top = `${parseInt(bone.style.top)+bone_gravity}px`;
+            bone.style.rotate = `${parseFloat(getComputedStyle(bone).rotate)+bone.rotation}deg`;
+        if(parseInt(bone.style.top) > window.innerHeight){
+            bone.remove();
+        };
+     })
+    }
+}

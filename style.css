@@ -1,8 +1,6 @@
 /* Make the page take full height */
 html, body {
     height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 /* Set up grid layout and stretch to fill the page */
@@ -13,9 +11,13 @@ html, body {
     height: 100%;
 }
 
-/* Position save/load box in its own row and center contents */
-#cookie_box {
-    grid-column: 1 / -1; /* Span across all columns */
+/* 
+Position save/load box in its own row and center contents 
+# is used to grab an element by its id. This differs from the notation div.skull_and_text
+The div. notation grabs all div items with a class of skull_and_text
+*/
+.cookie_box {
+    grid-column: 1 / -1; /* Span across all columns in the grid going from 1 (the first) to -1 (the last) */
     display: flex;
     justify-content: center;
     gap: 1rem; /* Space between buttons */
@@ -25,11 +27,11 @@ html, body {
 }
 
 /* Keep your existing styles */
-div.skull_and_text {
+.skull_and_text {
     text-align: center;
 }
 
-div.score_box {
+.score_box {
     background-color: aqua;
     text-align: center;
 }
