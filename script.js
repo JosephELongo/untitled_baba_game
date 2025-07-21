@@ -107,7 +107,6 @@ function getCookie() {
             score_increment = Number.parseInt(cookie.substring(c_increment.length, cookie.length))
         }
     }
-    //call to display updated score
     return "";
 }
 
