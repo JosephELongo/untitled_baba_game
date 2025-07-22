@@ -34,4 +34,6 @@ The div. notation grabs all div items with a class of skull_and_text
 .score_box {
     background-color: aqua;
     text-align: center;
+    grid-column: 1 / -1;
+    display:inline-block;
 }

@@ -2,7 +2,7 @@
 //            V A R I A B L E S
 // =======================================
 let score = 0;
-let score_increment = 1
+let score_increment = 1;
 let score_box_showing = false;
 let bone_counter = 0;
 const bone_gravity = 10;
@@ -54,9 +54,13 @@ function updateScoreBox() {
 
 function summon(rect) {
     let x = Math.floor(Math.random() * (rect.right - rect.left)) + rect.left;
-    let y = rect.bottom;
+    let y = -1 * (rect.bottom + rect.height);
     let bone = document.createElement("img");
-    let rotation = Math.floor(Math.random() * bone_rotation)
+    //Generate a random number between 0 and 1
+    //Subtract 0.5 from it to get a random number between -0.5 and 0.5
+    //Multiply it by 2 to get a random number between -1 and 1
+    //Multiply it by our bone_rotation constant and take its floor to end up with a whole number
+    let rotation = Math.floor((Math.random() - 0.5) * 2 * bone_rotation)
 
     score += score_increment;
     bone.id = `bone_${bone_counter}`;
@@ -69,6 +73,7 @@ function summon(rect) {
     bone.style.position = "absolute";
 
     zero_zero.appendChild(bone);
+    console.lo
     bone_counter+=1;;
 };
 
